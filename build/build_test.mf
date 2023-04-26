@@ -1,0 +1,103 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    build_test.mf                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/04/26 13:40:57 by emcnab            #+#    #+#              #
+#    Updated: 2023/04/26 14:16:58 by emcnab           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# **************************************************************************** #
+#                               COMPILATIONS VARS                              #
+# **************************************************************************** #
+
+DIR_BUILD = ./build/
+DIR_OBJS = $(DIR_BUILD)/debug/objs
+DIR_DEPS = $(DIR_BUILD)/deps
+DIR_SRCS = ./test
+DIR_INCL = ./include
+DIR_BIN = ./bin
+
+FILES_SRCS = $(shell find ./ -wholename "$(DIR_SRCS)/*.c")
+FILES_OBJS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_OBJS)/%.o,$(FILES_SRCS))
+FILES_DEPS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_DEPS)/%.d,$(FILES_SRCS))
+
+DEBUG = -fsanitize=address,leak -g 
+SILENCED = -Wno-padded -Wno-nullability-extension -Wno-missing-variable-declarations
+LIBS = -lcriterion -L$(DIR_BIN) -l42_debug
+
+C_COMPILER = clang
+I_FLAGS = $(foreach dir,$(DIR_INCL),-I$(dir) )
+C_FLAGS = -Wall -Wextra -Werror -Weverything $(SILENCED) $(DEBUG) $(I_FLAGS)
+C_DEPS = -MM -MP $(I_FLAGS)
+
+BIN = $(DIR_BIN)/lib42_test
+
+# **************************************************************************** #
+#                               COMPILATIONS TASKS                             #
+# **************************************************************************** #
+
+all: $(BIN)
+
+$(BIN): $(FILES_OBJS) $(FILES_DEPS)
+# 	displays build command
+	@printf "$(BOLD)$(BLUE)building $(WHITE)%-30s$(RESET)" "$@"
+	@printf " $(CYAN)$(A_COMPILER) $(A_FLAGS)$(RESET)\n"
+# 	builds binary
+	@mkdir -p $(@D)
+	@$(C_COMPILER) $(C_FLAGS) $(FILES_OBJS) -o $(BIN) $(LIBS)
+
+
+
+$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
+# 	displays build command
+	@printf "$(GREEN)building $(WHITE)%-30s$(RESET)" "$(notdir $@)"
+	@printf " $(CYAN)$(C_COMPILER) $(C_FLAGS)\n$(RESET)"
+# 	builds object file
+	@mkdir -p $(@D)
+	@$(C_COMPILER) $(C_FLAGS) -c $< -o $@
+
+
+
+$(DIR_DEPS)/%.d: $(DIR_SRCS)/%.c
+	@mkdir -p $(@D)
+	@$(C_COMPILER) $(C_FLAGS) $(C_DEPS) -MT $(DIR_OBJS)/$*.o -MF $@ $<
+
+
+
+clean:
+	@echo "$(RED)removing $(WHITE)*.o$(RESET)"
+	@rm -f $(FILES_OBJS)
+	@echo "$(RED)removing $(WHITE)*.d$(RESET)"
+	@rm -f $(FILES_DEPS)
+
+
+
+fclean: clean
+	@echo "$(BOLD)$(RED)removing $(WHITE)$(BIN)$(RESET)"
+	@rm -f $(BIN)
+
+
+
+re: fclean
+	@make -s all
+
+
+
+debug:
+	@echo $(FILES_SRCS)
+	@echo $(FILES_OBJS)
+	@echo $(FILES_DEPS)
+	@echo $(C_FLAGS)
+
+
+
+-include $(FILES_DEPS)
+-include ./build/colors.mf
+
+
+
+.PHONY: all submodules clean fclean re debug
