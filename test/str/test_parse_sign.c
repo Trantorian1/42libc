@@ -6,12 +6,13 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:20 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 19:41:03 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 19:44:46 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <criterion/criterion.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "parse_sign.h"
 
