@@ -6,109 +6,63 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:20 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 19:44:46 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 20:44:54 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <criterion/criterion.h>
+#include <criterion/parameterized.h>
 #include <stdint.h>
 #include <stdlib.h>
 
 #include "parse_sign.h"
 
-#define MSG_FORMAT(str_a) "parsing \"" #str_a "\"" 
-#define MSG_FORMAT_INV_STR(str_a) MSG_FORMAT(str_a) ", expected %s, got %s"
-#define MSG_FORMAT_INV_SIGN(str_a) MSG_FORMAT(str_a) ", expected %d, got %d"
-#define MSG_FORMAT_RES(str_a) MSG_FORMAT(str_a) ": sign is %d"
+#define MSG_FORMAT "parsing \"%s\""
+#define MSG_FORMAT_INV_STR MSG_FORMAT ", expected \"%s\", got \"%s\""
+#define MSG_FORMAT_INV_SIGN MSG_FORMAT ", expected \"%d\", got \"%d\""
+#define MSG_FORMAT_RES MSG_FORMAT ": sign is %d"
 
-Test(parse_sign, parse_sign_invalid)
+typedef struct s_sign_params
 {
 	char	*str_src;
-	char	*str_dst;
-	int8_t	sign;
+	char	*expected_str;
+	int8_t	expected_sign;
+}	t_s_sign_params;
 
-	// test for str == NULL, sign should be 0 and return should be NULL
-	str_src = NULL;
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(NULL), sign);
-	cr_assert_eq(
-		str_dst, str_src,
-		MSG_FORMAT_INV_STR(NULL),
-		str_src, str_dst);
-	cr_assert_eq(
-		sign, 0,
-		MSG_FORMAT_INV_SIGN(NULL),
-		0, sign);
+t_s_sign_params	sign_params[] = {
+	{.str_src = "-123", .expected_str = "123", .expected_sign = -1},
+	{.str_src = "+123", .expected_str = "123", .expected_sign = +1},
+	{.str_src = "123" , .expected_str = "123", .expected_sign = +1},
+	{.str_src = "abc" , .expected_str = "abc", .expected_sign = 0 },
+	{.str_src = ""    , .expected_str = ""   , .expected_sign = 0 },
+	{.str_src = NULL  , .expected_str = NULL , .expected_sign = 0 },
+};
 
-	// test for str == "", sign should be 0 and return should be str
-	str_src = "";
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(""), sign);
-	cr_assert_str_eq(
-		str_dst, str_src,
-		MSG_FORMAT_INV_STR(""),
-		str_src, str_dst);
-	cr_assert_eq(
-		sign, 0,
-		MSG_FORMAT_INV_SIGN(""),
-		0, sign);
-
-	// test for str == "\D+", sign should be 0 and return should be str
-	str_src = "abcd";
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(abcd), sign);
-	cr_assert_str_eq(
-		str_dst, str_src,
-		MSG_FORMAT_INV_STR(abcd),
-		str_src, str_dst);
-	cr_assert_eq(
-		sign, 0,
-		MSG_FORMAT_INV_SIGN(abcd),
-		0, sign);
+ParameterizedTestParameters(parse_sign_suite, parse_sign_test)
+{
+	size_t	nb_params = sizeof(sign_params) / sizeof(*sign_params);
+	return (cr_make_param_array(t_s_sign_params, sign_params, nb_params));
 }
 
-Test(parse_sign, parse_sign_valid)
+ParameterizedTest(t_s_sign_params *params, parse_sign_suite, parse_sign_test)
 {
-	char	*str_src;
 	char	*str_dst;
 	int8_t	sign;
 
-	// test for str == "-\d*", sign should be -1 and return should be (str + 1) 
-	str_src = "-123";
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(-123), sign);
-	cr_assert_str_eq(
-		str_dst, str_src + 1, 
-		MSG_FORMAT_INV_STR(-123),
-		str_src + 1, str_dst);
+	str_dst = parse_sign(params->str_src, &sign);
+	cr_log_info(MSG_FORMAT_RES, params->str_src, sign);
+	if (params->str_src == NULL || params->expected_str == NULL)
+		cr_assert_eq(
+			str_dst, params->expected_str,
+			MSG_FORMAT_INV_STR,
+			params->str_src, params->expected_str, str_dst);
+	else
+		cr_assert_str_eq(
+			str_dst, params->expected_str,
+			MSG_FORMAT_INV_STR,
+			params->str_src, params->expected_str, str_dst);
 	cr_assert_eq(
-		sign, -1,
-		MSG_FORMAT_INV_SIGN(-123),
-		-1, sign);
-
-	// test for str == "+\d*", sign should be +1 and return should be (str + 1)
-	str_src = "+123";
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(+123), sign);
-	cr_assert_str_eq(
-		str_dst, str_src + 1,
-		MSG_FORMAT_INV_STR(+123),
-		str_src + 1, str_dst);
-	cr_assert_eq(
-		sign, +1,
-		MSG_FORMAT_INV_SIGN(+123),
-		+1, sign);
-
-	// test for str == "\d+", sign should be +1 and return should be str
-	str_src = "123";
-	str_dst = parse_sign(str_src, &sign);
-	cr_log_info(MSG_FORMAT_RES(123), sign);
-	cr_assert_str_eq(
-		str_dst, str_src,
-		MSG_FORMAT_INV_STR(123),
-		str_src, str_dst);
-	cr_assert_eq(
-		sign, +1,
-		MSG_FORMAT_INV_SIGN(123),
-		+1, sign);
+		sign, params->expected_sign,
+		MSG_FORMAT_INV_SIGN,
+		params->str_src, params->expected_sign, sign);
 }
