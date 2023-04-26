@@ -6,7 +6,7 @@
 #    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/25 15:27:16 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/26 13:23:19 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 17:08:45 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ C_FLAGS = -Wall -Wextra -Werror -Weverything $(SILENCED) $(DEBUG) $(I_FLAGS)
 C_DEPS = -MM -MP $(I_FLAGS)
 
 A_COMPILER = ar
-A_FLAGS = -cqs
+A_FLAGS = -rc
 
 BIN = $(DIR_BIN)/lib42_debug.a
 
