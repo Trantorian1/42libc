@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:36:11 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 11:56:04 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 19:18:17 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char *_Nullable	parse_sign(char *_Nonnull str, int8_t *_Nonnull sign)
 	if (str == NULL || sign == NULL)
 	{
 		errno = EINVAL;
+		if (sign != NULL)
+			*sign = 0;
 		return (str);
 	}
 	if (*str == '-')
