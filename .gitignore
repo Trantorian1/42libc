@@ -1,0 +1,6 @@
+# ignores all build artifacts
+build/**
+!build/*.mf
+
+# ignores all generated binaries
+bin/**
