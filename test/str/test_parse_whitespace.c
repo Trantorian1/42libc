@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:44:19 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 20:48:36 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 20:49:37 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ typedef struct s_whitespace_params
 //
 // - str_src: source string to be parsed
 // - expected: expected result after parsing
-//
-// Note that because we are using cr_assert_str_eq for parametrised tests, we
-// cannot check for null here. Instead, null will be tested in 
-// parse_whitespace_null
 t_s_whitespace_params	whitespace_params[] = {
 	{.str_src = "\t\t\tabc"     , .expected = "abc"}, 
 	{.str_src = "\n\n\ndef"     , .expected = "def"}, 
