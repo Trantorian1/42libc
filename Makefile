@@ -6,7 +6,7 @@
 #    By: emcnab <emcnab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 14:08:48 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/26 14:15:42 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 18:43:24 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,19 @@ re_debug:
 #                                    TEST TASK                                 #
 # **************************************************************************** #
 
-test: debug
+test:
+	@make --silent --file=./build/build_debug.mf
 	@echo "$(BOLD)$(YELLOW)[ Building in Test Mode ]$(RESET)"
 	@make --silent --file=./build/build_test.mf
 	@echo "$(BOLD)$(YELLOW)[ Runnig tests... ]$(RESET)"
 	@./bin/lib42_test
+
+test_verbose:
+	@make --silent --file=./build/build_debug.mf
+	@echo "$(BOLD)$(YELLOW)[ Building in Test Mode ]$(RESET)"
+	@make --silent --file=./build/build_test.mf
+	@echo "$(BOLD)$(YELLOW)[ Runnig tests... ]$(RESET)"
+	@./bin/lib42_test --verbose
 
 clean_test:
 	@echo "$(BOLD)$(YELLOW)[ Removing all Test objects ]$(RESET)"
@@ -55,7 +63,7 @@ fclean_test:
 	@echo "$(BOLD)$(YELLOW)[ Removing all Test files ]$(RESET)"
 	@make fclean --silent --file=./build/build_test.mf
 
-re_test:
+re_test: re_debug
 	@echo "$(BOLD)$(YELLOW)[ Rebuilding Test binary ]$(RESET)"
 	@make fclean --silent --file=./build/build_test.mf
 	@make --silent --file=./build/build_test.mf
