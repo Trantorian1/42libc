@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_sign.c                                       :+:      :+:    :+:   */
+/*   lib_strcmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 18:36:11 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 11:56:04 by emcnab           ###   ########.fr       */
+/*   Created: 2023/04/26 09:50:17 by emcnab            #+#    #+#             */
+/*   Updated: 2023/04/26 09:55:55 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse_sign.h"
+#include "lib_strcmp.h"
 
 #include <stdlib.h>
-#include <stddef.h>
 #include <errno.h>
 
-#include "is_digit.h"
-
-char *_Nullable	parse_sign(char *_Nonnull str, int8_t *_Nonnull sign)
+int32_t	lib_strcmp(char *_Nonnull str_a, char *_Nonnull str_b)
 {
-	if (str == NULL || sign == NULL)
+	int32_t	diff;
+
+	if (str_a == NULL || str_b == NULL)
 	{
 		errno = EINVAL;
-		return (str);
+		return (0);
 	}
-	if (*str == '-')
+	diff = 0;
+	while (*str_a && *str_b)
 	{
-		str++;
-		*sign = -1;
+		diff += *str_a - *str_b;
+		str_a++;
+		str_b++;
 	}
-	else if (*str == '+')
-	{
-		str++;
-		*sign = 1;
-	}
-	else if (is_digit(*str))
-		*sign = 1;
-	else
-		sign = 0;
-	return (str);
+	while (*str_a)
+		diff += *str_a++;
+	while (*str_b)
+		diff += *str_b++;
+	return (diff);
 }

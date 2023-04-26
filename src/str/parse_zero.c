@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:40:47 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/25 18:42:14 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 12:03:41 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-char	*parse_zero(char *_Nonnull str)
+char *_Nonnull	parse_zero(char *_Nonnull str)
 {
 	if (str == NULL)
 	{

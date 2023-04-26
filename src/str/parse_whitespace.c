@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:26:44 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/25 18:35:32 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 12:03:07 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "is_whitespace.h"
 
-char	*parse_whitespace(char *_Nonnull str)
+char *_Nonnull	parse_whitespace(char *_Nonnull str)
 {
 	if (str == NULL)
 	{

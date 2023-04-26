@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 18:18:50 by                   #+#    #+#             */
-/*   Updated: 2023/04/25 18:18:50 by                  ###   ########.fr       */
+/*   Created: 2023/04/26 09:58:06 by                   #+#    #+#             */
+/*   Updated: 2023/04/26 12:00:42 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <stdint.h>
 
-int32_t	str_to_int32(char *_Nonnull str, char *endptr);
+int32_t	str_to_int32(char *_Nonnull str, char *_Nonnull*_Nullable endptr);
 
 #endif
