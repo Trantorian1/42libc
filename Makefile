@@ -6,7 +6,7 @@
 #    By: emcnab <emcnab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 14:08:48 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/26 21:20:45 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 21:24:02 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,7 @@ re_debug:
 #                                    TEST TASK                                 #
 # **************************************************************************** #
 
-test:
-	@make --silent --file=./build/build_debug.mf
+test: debug
 	@echo "$(BOLD)$(YELLOW)[ Building in Test Mode ]$(RESET)"
 	@make --silent --file=./build/build_test.mf
 	@echo "$(BOLD)$(YELLOW)[ Runnig tests... ]$(RESET)"

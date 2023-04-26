@@ -6,7 +6,7 @@
 #    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/26 13:40:57 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/26 20:05:27 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 21:25:10 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ all: $(BIN)
 $(BIN): $(FILES_OBJS) $(FILES_DEPS) $(DIR_BIN)/lib42_debug.a
 # 	displays build command
 	@printf "$(BOLD)$(BLUE)building $(WHITE)%-30s$(RESET)" "$@"
-	@printf " $(CYAN)$(C_COMPILER) $(C_FLAGS) $(FILES_OBJS) $(LIBS)$(RESET)\n"
+	@printf " $(CYAN)$(C_COMPILER) $(C_FLAGS) $(LIBS)$(RESET)\n"
 # 	builds binary
 	@mkdir -p $(@D)
 	@$(C_COMPILER) $(C_FLAGS) $(FILES_OBJS) -o $(BIN) $(LIBS)
