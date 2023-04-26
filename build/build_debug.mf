@@ -6,7 +6,7 @@
 #    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/25 15:27:16 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/25 16:37:56 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 13:23:19 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,14 @@
 #                               COMPILATIONS VARS                              #
 # **************************************************************************** #
 
-DIR_BUILD = ./build/debug
-DIR_OBJS = $(DIR_BUILD)/objs
+DIR_BUILD = ./build/
+DIR_OBJS = $(DIR_BUILD)/debug/objs
 DIR_DEPS = $(DIR_BUILD)/deps
-DIR_SRCS = ../src
-DIR_INCL = ../include
-DIR_BIN = ../bin
+DIR_SRCS = ./src
+DIR_INCL = ./include
+DIR_BIN = ./bin
 
-FILES_SRCS = $(shell find ../ -wholename "$(DIR_SRCS)/*.c")
+FILES_SRCS = $(shell find ./ -wholename "$(DIR_SRCS)/*.c")
 FILES_OBJS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_OBJS)/%.o,$(FILES_SRCS))
 FILES_DEPS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_DEPS)/%.d,$(FILES_SRCS))
 
@@ -29,13 +29,14 @@ DEBUG = -fsanitize=address,leak -g
 
 C_COMPILER = clang
 I_FLAGS = $(foreach dir,$(DIR_INCL),-I$(dir) )
-C_FLAGS = -Wall -Wextra -Werror -Weverything -Wno-padded $(DEBUG) $(I_FLAGS)
+SILENCED = -Wno-padded -Wno-nullability-extension
+C_FLAGS = -Wall -Wextra -Werror -Weverything $(SILENCED) $(DEBUG) $(I_FLAGS)
 C_DEPS = -MM -MP $(I_FLAGS)
 
 A_COMPILER = ar
 A_FLAGS = -cqs
 
-BIN = $(DIR_BIN)/lib42.a
+BIN = $(DIR_BIN)/lib42_debug.a
 
 # **************************************************************************** #
 #                               COMPILATIONS TASKS                             #
@@ -46,10 +47,10 @@ all: $(BIN)
 $(BIN): $(FILES_OBJS) $(FILES_DEPS)
 # 	displays build command
 	@printf "$(BOLD)$(BLUE)building $(WHITE)%-30s$(RESET)" "$@"
-	@printf " $(CYAN)$(C_COMPILER) $(C_FLAGS) $(LIB_ARGS)$(RESET)\n"
+	@printf " $(CYAN)$(A_COMPILER) $(A_FLAGS)$(RESET)\n"
 # 	builds binary
 	@mkdir -p $(@D)
-	@$(C_COMPILER) $(C_FLAGS) $(FILES_OBJS) -o $(BIN) $(LIB_ARGS)
+	@$(A_COMPILER) $(A_FLAGS) $(BIN) $(FILES_OBJS)
 
 
 
@@ -93,7 +94,6 @@ debug:
 	@echo $(FILES_OBJS)
 	@echo $(FILES_DEPS)
 	@echo $(C_FLAGS)
-	echo $(TARGET)
 
 
 

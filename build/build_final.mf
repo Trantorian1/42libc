@@ -6,7 +6,7 @@
 #    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/25 15:14:44 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/25 16:38:04 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/26 12:09:29 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@
 DIR_BUILD = ./build/
 DIR_OBJS = $(DIR_BUILD)/objs
 DIR_DEPS = $(DIR_BUILD)/deps
-DIR_SRCS = ../src
-DIR_INCL = ../include
-DIR_BIN = ../bin
+DIR_SRCS = ./src
+DIR_INCL = ./include
+DIR_BIN = ./bin
 
-FILES_SRCS = $(shell find ../ -wholename "$(DIR_SRCS)/*.c")
+FILES_SRCS = $(shell find ./ -wholename "$(DIR_SRCS)/*.c")
 FILES_OBJS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_OBJS)/%.o,$(FILES_SRCS))
 FILES_DEPS = $(patsubst $(DIR_SRCS)/%.c,$(DIR_DEPS)/%.d,$(FILES_SRCS))
 
@@ -29,7 +29,8 @@ OPT = -O3
 
 C_COMPILER = clang
 I_FLAGS = $(foreach dir,$(DIR_INCL),-I$(dir) )
-C_FLAGS = -Wall -Wextra -Werror -Weverything -Wno-padded $(OPT) $(I_FLAGS)
+SILENCED = -Wno-padded -Wno-nullability-extension
+C_FLAGS = -Wall -Wextra -Werror -Weverything $(SILENCED) $(OPT) $(I_FLAGS)
 C_DEPS = -MM -MP $(I_FLAGS)
 
 A_COMPILER = ar
@@ -46,10 +47,10 @@ all: $(BIN)
 $(BIN): $(FILES_OBJS) $(FILES_DEPS)
 # 	displays build command
 	@printf "$(BOLD)$(BLUE)building $(WHITE)%-30s$(RESET)" "$@"
-	@printf " $(CYAN)$(C_COMPILER) $(C_FLAGS) $(LIB_ARGS)$(RESET)\n"
+	@printf " $(CYAN)$(A_COMPILER) $(A_FLAGS)$(RESET)\n"
 # 	builds binary
 	@mkdir -p $(@D)
-	@$(C_COMPILER) $(C_FLAGS) $(FILES_OBJS) -o $(BIN) $(LIB_ARGS)
+	@$(A_COMPILER) $(A_FLAGS) $(BIN) $(FILES_OBJS)
 
 
 
