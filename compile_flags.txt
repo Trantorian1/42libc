@@ -4,3 +4,5 @@ include/
 -Wextra
 -Werror
 -Weverything
+-Wno-padded
+-Wno-nullability-extension
