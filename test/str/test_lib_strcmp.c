@@ -6,12 +6,12 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:02:49 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 18:46:36 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/26 19:08:06 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <criterion/criterion.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 #include "lib_strcmp.h"
 
