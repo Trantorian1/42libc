@@ -6,7 +6,7 @@
 #    By: emcnab <emcnab@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 14:08:48 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/26 21:24:02 by emcnab           ###   ########.fr        #
+#    Updated: 2023/04/28 18:57:09 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ re_test: re_debug
 #                                   FINAL TASK                                 #
 # **************************************************************************** #
 
-final:
+final: test
 	@echo "$(BOLD)$(BLUE)[ Building in Final Mode ]$(RESET)"
 	@make --silent --file=./build/build_final.mf
 
