@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  build_debug:
+    build: .
+    entrypoint: ["make", "debug"]
+    environment:
+      - BUILD_MODE=debug
+    volumes:
+      - .:/app
+
+  build_test:
+    build: .
+    entrypoint: ["make", "test"]
+    environment:
+      - BUILD_MODE=test
+    volumes:
+      - .:/app
+
+  build_final:
+    build: .
+    entrypoint: ["make", "final"]
+    environment:
+      - BUILD_MODE=final
+    volumes:
+      - .:/app
