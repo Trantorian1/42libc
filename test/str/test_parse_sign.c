@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:20 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 20:44:54 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/29 10:32:06 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_sign_params
 	int8_t	expected_sign;
 }	t_s_sign_params;
 
-t_s_sign_params	sign_params[] = {
+static t_s_sign_params	sign_params[] = {
 	{.str_src = "-123", .expected_str = "123", .expected_sign = -1},
 	{.str_src = "+123", .expected_str = "123", .expected_sign = +1},
 	{.str_src = "123" , .expected_str = "123", .expected_sign = +1},
