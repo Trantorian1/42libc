@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:07:30 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/26 14:48:50 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/29 11:21:31 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ static int32_t	str_conv32_negative(
 			return (result);
 		}
 		result = result - char_val;
+		str++;
 	}
+	*endptr = str;
 	return (result);
 }
 
@@ -78,7 +80,9 @@ static int32_t	str_conv32_positive(
 			return (result);
 		}
 		result = result + char_val;
+		str++;
 	}
+	*endptr = str;
 	return (result);
 }
 
@@ -100,6 +104,8 @@ int32_t	str_to_int32(char *_Nonnull str, char *_Nonnull*_Nullable endptr)
 
 	if (str == NULL || endptr == NULL)
 	{
+		if (endptr != NULL)
+			*endptr = str;
 		errno = EINVAL;
 		return (0);
 	}
@@ -108,6 +114,7 @@ int32_t	str_to_int32(char *_Nonnull str, char *_Nonnull*_Nullable endptr)
 	str = parse_zero(str);
 	if (is_int32(str, sign) == false)
 	{
+		*endptr = str;
 		errno = ERANGE;
 		return (0);
 	}
