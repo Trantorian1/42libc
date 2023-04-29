@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlen32.c                                         :+:      :+:    :+:   */
+/*   strlensize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 18:50:07 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/29 14:51:29 by emcnab           ###   ########.fr       */
+/*   Created: 2023/04/29 14:45:57 by emcnab            #+#    #+#             */
+/*   Updated: 2023/04/29 14:50:09 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "strlen32.h"
+#include "strlensize.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <errno.h>
 
-int32_t	strlen32(char *_Nonnull str)
+size_t	strlensize(char *_Nonnull str)
 {
-	int32_t	len;
+	size_t	len;
 
+	len = 0;
 	if (str == NULL)
 	{
 		errno = EINVAL;
-		return (0);
+		return (len);
 	}
-	len = 0;
-	while (str[len] != '\0' && len < INT32_MAX)
+	while (str[len] != '\0' && len < SIZE_MAX)
 		len++;
 	if (str[len] != '\0')
 	{
