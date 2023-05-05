@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 10:41:00 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/29 11:25:47 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/04/29 13:00:39 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <criterion/parameterized.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "str_to_int32.h"
 
@@ -31,25 +32,34 @@ typedef struct s_to_int_param
 }	t_s_to_int_param;
 
 static t_s_to_int_param	to_int_params[] = {
-	{.str_src = WHITESPACED(123)   , .expect_endptr = ""      , .expect_int = 123},
-	{.str_src = WHITESPACED(123a)  , .expect_endptr = "a"     , .expect_int = 123},
-	{.str_src = WHITESPACED(1 23a) , .expect_endptr = " 23a"  , .expect_int = 1},
-	{.str_src = WHITESPACED(+)     , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = WHITESPACED(-)     , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = WHITESPACED()      , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = WHITESPACED(a)     , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = WHITESPACED(+a)    , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = WHITESPACED(-a)    , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = "123"              , .expect_endptr = ""      , .expect_int = 123},
-	{.str_src = "123a"             , .expect_endptr = "a"     , .expect_int = 123},
-	{.str_src = "1 23a"            , .expect_endptr = " 23a"  , .expect_int = 1},
-	{.str_src = "+"                , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = "-"                , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = ""                 , .expect_endptr = ""      , .expect_int = 0},
-	{.str_src = "a"                , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = "+a"               , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = "-a"               , .expect_endptr = "a"     , .expect_int = 0},
-	{.str_src = NULL               , .expect_endptr = NULL    , .expect_int = 0}
+	{.str_src = WHITESPACED(123)   , .expect_endptr = ""           , .expect_int = 123},
+	{.str_src = WHITESPACED(123a)  , .expect_endptr = "a"          , .expect_int = 123},
+	{.str_src = WHITESPACED(1 23a) , .expect_endptr = " 23a"       , .expect_int = 1},
+	{.str_src = WHITESPACED(+)     , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = WHITESPACED(-)     , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = WHITESPACED()      , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = WHITESPACED(a)     , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = WHITESPACED(+a)    , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = WHITESPACED(-a)    , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = "123"              , .expect_endptr = ""           , .expect_int = 123},
+	{.str_src = "123a"             , .expect_endptr = "a"          , .expect_int = 123},
+	{.str_src = "1 23a"            , .expect_endptr = " 23a"       , .expect_int = 1},
+	{.str_src = "+"                , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = "-"                , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = ""                 , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = "a"                , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = "+a"               , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = "-a"               , .expect_endptr = "a"          , .expect_int = 0},
+	{.str_src = "2147483647"       , .expect_endptr = ""           , .expect_int = 2147483647},
+	{.str_src = "-2147483648"      , .expect_endptr = ""           , .expect_int = -2147483648},
+	{.str_src = "2147483648"       , .expect_endptr = "2147483648" , .expect_int = 0},
+	{.str_src = "-2147483649"      , .expect_endptr = "2147483649" , .expect_int = 0},
+	{.str_src = "100"              , .expect_endptr = ""           , .expect_int = 100},
+	{.str_src = "-100"             , .expect_endptr = ""           , .expect_int = -100},
+	{.str_src = "0"                , .expect_endptr = ""           , .expect_int = 0},
+	{.str_src = "12"               , .expect_endptr = ""           , .expect_int = 12},
+	{.str_src = "-12"              , .expect_endptr = ""           , .expect_int = -12},
+	{.str_src = NULL               , .expect_endptr = NULL         , .expect_int = 0}
 };
 
 ParameterizedTestParameters(to_int_suite, to_int_test)
@@ -80,3 +90,19 @@ ParameterizedTest(t_s_to_int_param *params, to_int_suite, to_int_test)
 			MSG_FORMAT_INV_END,
 			params->str_src, params->expect_endptr, endptr);
 }
+
+// Test(to_int_suite, to_int_random)
+// {
+// 	int8_t	index;
+// 	int32_t	n;
+// 	char	*str_src;
+//
+// 	srand((uint32_t)time(NULL));
+// 	
+// 	index = -1;
+// 	while (++index < 100)
+// 	{
+// 		n = rand() % INT32_MAX - INT32_MAX / 2;
+// 		str = itoa(n);
+// 	}
+// }

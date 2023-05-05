@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:09:03 by emcnab            #+#    #+#             */
-/*   Updated: 2023/04/29 15:47:20 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/02 10:23:15 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
+
+#include "g_barrier.h"
+#include "lib_memcpy.h"
 
 typedef struct s_mem
 {
@@ -54,12 +56,11 @@ void *_Nonnull	lib_realloc(void *_Nonnull mem, size_t size)
 {
 	t_s_mem		*node_old;
 	t_s_mem		*node_new;
-	static char	dummy = '\0';
 
 	if (mem == NULL)
 	{
 		errno = EINVAL;
-		return (&dummy);
+		return (&g_barrier);
 	}
 	node_old = ((t_s_mem *)mem) - 1;
 	node_new = malloc(sizeof(*node_new) + size);
@@ -71,8 +72,8 @@ void *_Nonnull	lib_realloc(void *_Nonnull mem, size_t size)
 	node_new->size = size;
 	node_new->prev = NULL;
 	node_new->next = NULL;
-	memcpy(node_new, node_old, sizeof(*node_old));
-	memcpy(node_new + 1, mem, node_old->size);
+	lib_memcpy(node_new, node_old, sizeof(*node_old));
+	lib_memcpy(node_new + 1, mem, node_old->size);
 	if (node_old == g_mem_head)
 		g_mem_head = node_new;
 	free(node_old);
@@ -83,7 +84,6 @@ void *_Nonnull	lib_freeall(void)
 {
 	t_s_mem			*node_prev;
 	t_s_mem			*node_curr;
-	static t_s_mem	dummy = {.size = 0, .next = NULL, .prev = NULL};
 
 	errno = ENOMEM;
 	node_curr = g_mem_head;
@@ -96,7 +96,7 @@ void *_Nonnull	lib_freeall(void)
 		free(node_prev);
 	}
 	g_mem_head = NULL;
-	return (&dummy);
+	return (&g_barrier);
 }
 
 void	lib_free(void *_Nonnull mem)
