@@ -6,7 +6,7 @@
 #    By: emcnab <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/25 15:27:16 by emcnab            #+#    #+#              #
-#    Updated: 2023/04/28 18:51:49 by emcnab           ###   ########.fr        #
+#    Updated: 2023/05/06 14:47:40 by emcnab           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ DEBUG = -fsanitize=address,leak -g
 
 C_COMPILER = clang
 I_FLAGS = $(foreach dir,$(DIR_INCL),-I$(dir) )
-SILENCED = -Wno-padded -Wno-nullability-extension
+SILENCED = -Wno-nullability-extension
 C_FLAGS = -Wall -Wextra -Weverything $(SILENCED) $(DEBUG) $(I_FLAGS)
 C_DEPS = -MM -MP $(I_FLAGS)
 
