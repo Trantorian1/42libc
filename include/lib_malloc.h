@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:11:58 by                   #+#    #+#             */
-/*   Updated: 2023/04/29 14:26:42 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:48:27 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void *_Nonnull	lib_malloc(size_t size);
 void *_Nonnull	lib_realloc(void *_Nonnull mem, size_t size);
-void *_Nonnull	lib_freeall(void);
+void			lib_freeall(void);
 void			lib_free(void *_Nonnull mem);
 bool			is_leaking(void);
 

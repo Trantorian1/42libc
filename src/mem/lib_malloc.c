@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:09:03 by emcnab            #+#    #+#             */
-/*   Updated: 2023/05/02 10:23:15 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:48:32 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "g_barrier.h"
 #include "lib_memcpy.h"
 
 typedef struct s_mem
@@ -60,7 +59,7 @@ void *_Nonnull	lib_realloc(void *_Nonnull mem, size_t size)
 	if (mem == NULL)
 	{
 		errno = EINVAL;
-		return (&g_barrier);
+		return (mem);
 	}
 	node_old = ((t_s_mem *)mem) - 1;
 	node_new = malloc(sizeof(*node_new) + size);
@@ -80,7 +79,7 @@ void *_Nonnull	lib_realloc(void *_Nonnull mem, size_t size)
 	return ((void *)(node_new + 1));
 }
 
-void *_Nonnull	lib_freeall(void)
+void	lib_freeall(void)
 {
 	t_s_mem			*node_prev;
 	t_s_mem			*node_curr;
@@ -96,7 +95,6 @@ void *_Nonnull	lib_freeall(void)
 		free(node_prev);
 	}
 	g_mem_head = NULL;
-	return (&g_barrier);
 }
 
 void	lib_free(void *_Nonnull mem)
