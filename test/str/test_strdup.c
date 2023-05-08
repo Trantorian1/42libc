@@ -6,7 +6,7 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:09:08 by emcnab            #+#    #+#             */
-/*   Updated: 2023/05/08 15:22:00 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/08 18:18:41 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #define MSG_FORMAT "duplicating \"%s\""
 #define MSG_FORMAT_INV_STR MSG_FORMAT ", expected \"%s\", got \"%s\""
-#define MSG_FORMAT_RES MSG_FORMAT ":result is \"%s\""
+#define MSG_FORMAT_RES MSG_FORMAT ": result is \"%s\""
 
 static char	*strdup_params[] = {
 	"",
