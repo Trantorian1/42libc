@@ -6,8 +6,13 @@
 /*   By: emcnab <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 10:13:20 by emcnab            #+#    #+#             */
-/*   Updated: 2023/05/02 10:14:43 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:02:28 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef G_BARRIER_H
+# define G_BARRIER_H
+
 char	g_barrier[1024];
+
+#endif

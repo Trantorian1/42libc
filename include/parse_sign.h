@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:36:56 by                   #+#    #+#             */
-/*   Updated: 2023/04/26 11:57:17 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:00:49 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <stdint.h>
 
-char *_Nonnull parse_sign(char *_Nonnull str, int8_t *_Nonnull sign);
+char *_Nonnull	parse_sign(char *_Nonnull str, int8_t *_Nonnull sign);
 
 #endif
