@@ -6,7 +6,7 @@
 /*   By:  <>                                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:34:00 by                   #+#    #+#             */
-/*   Updated: 2023/05/09 11:34:16 by emcnab           ###   ########.fr       */
+/*   Updated: 2023/05/09 11:39:49 by emcnab           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <stddef.h>
 
-void *_Nonnull	lib_memdup(void *_Nonnull src, void *_Nonnull dst, size_t len);
+void *_Nonnull	lib_memdup(void *_Nonnull src, size_t len);
 
 #endif
